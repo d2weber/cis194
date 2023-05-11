@@ -5,7 +5,7 @@ module LogAnalysis where
 import Log
 
 parseMessage :: String -> LogMessage
-parseMessage m = case (words m) of
+parseMessage m = case words m of
   "I" : time : msg -> LogMessage Info (read time) (unwords msg)
   "W" : time : msg -> LogMessage Warning (read time) (unwords msg)
   "E" : sever : time : msg -> LogMessage (Error (read sever)) (read time) (unwords msg)
