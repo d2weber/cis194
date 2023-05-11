@@ -6,8 +6,11 @@ import Data.List (tails, transpose)
 
 skips :: [a] -> [[a]]
 skips l =
-  [ [c | (c, ii) <- zip l [1 ..], ii `mod` i == 0]
-    | i <- [1 .. length l]
+  [ map head $
+      takeWhile (not . null) $
+        iterate (drop n) $
+          drop (n - 1) l
+    | n <- [1 .. length l]
   ]
 
 localMaxima :: [Integer] -> [Integer]
