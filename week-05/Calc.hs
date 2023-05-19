@@ -104,8 +104,8 @@ instance HasVars (M.Map String Integer -> Maybe Integer) where
 
 instance Expr (M.Map String Integer -> Maybe Integer) where
   lit n _ = Just n
-  add x y m = liftA2 (+) (y m) (x m)
-  mul x y m = liftA2 (*) (y m) (x m)
+  add = (liftA2 . liftA2) (+)
+  mul = (liftA2 . liftA2) (*)
 
 withVars ::
   [(String, Integer)] ->
