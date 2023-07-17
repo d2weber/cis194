@@ -55,3 +55,18 @@ successProb b = calcRatio <$> replicateM 1000 (invade b)
     calcRatio = (/ 1000) . fromIntegral . length . filter success
     success Battlefield {defenders = 0} = True
     success _ = False
+
+-- Exercise 5
+factorial :: Integral a => a -> a
+factorial n = product [1 .. n]
+
+combinations :: Integral a => a -> a -> a
+combinations n k = factorial n `div` (factorial k * factorial (n - k))
+
+exactSuccessProb :: Battlefield -> Double
+exactSuccessProb Battlefield {attackers, defenders}
+  | attackers <= 1 = 0
+  | defenders <= 0 = 1
+  | attackers <= 2 && defenders <= 1 = 15 / 36
+  | attackers <= 2 && defenders >= 2 = fromIntegral (sum (fmap ((36-) . (*5)) [1..5])) / (6 * 6 * 6)
+exactSuccessProb Battlefield {attackers, defenders} = 1
